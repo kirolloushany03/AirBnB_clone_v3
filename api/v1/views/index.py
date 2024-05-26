@@ -9,6 +9,7 @@ def status():
     """an this return json data to check the status"""
     return jsonify({"status": "OK"})
 
+
 @app_views.route("/stats")
 def stats():
     """return the count of all classes"""
@@ -26,4 +27,6 @@ def stats():
                "Review": Review,
                "State": State,
                "User": User}
-    return jsonify({key: storage.count(value) for key, value in classes.items()})
+    return jsonify({
+        key: storage.count(value) for key, value in classes.items()
+    })
