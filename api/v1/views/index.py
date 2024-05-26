@@ -21,12 +21,12 @@ def stats():
     from models.review import Review
     from models.amenity import Amenity
 
-    classes = {"Amenity": Amenity,
-               "City": City,
-               "Place": Place,
-               "Review": Review,
-               "State": State,
-               "User": User}
+    classes = {"amenities": Amenity,
+               "cities": City,
+               "places": Place,
+               "reviews": Review,
+               "states": State,
+               "users": User}
     return jsonify({
         key: storage.count(value) for key, value in classes.items()
     })
