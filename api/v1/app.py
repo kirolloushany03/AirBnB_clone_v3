@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ this module sets to flask web application"""
-from flask import Flask, jsonify
+from flask import Flask, jsonify, url_for
 from models import storage
 from api.v1.views import app_views
 import os
@@ -23,8 +23,11 @@ def error_404(error):
     response.status_code = 404
     return response
 
+
 if __name__ == "__main__":
     host = os.getenv("HBNB_API_HOST", "0.0.0.0")
     port = int(os.getenv("HBNB_API_PORT", "5000"))
+    app.url_map.strict_slashes = False
 
-    app.run(host=host, port=port, threaded=True)
+    app.run(host=host, port=port, threaded=True, debug=True)
+

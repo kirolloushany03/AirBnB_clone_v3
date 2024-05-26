@@ -5,9 +5,9 @@ from models import storage
 from models.state import State
 from flask import jsonify
 
-
-@app_views.route('/api/v1/states', methods=['GET'])
+@app_views.get('/states')
+@app_views.get('/states/')
 def all_states():
     """return all the list of all state"""
-    states_dic = storage.all(State)
-    return jsonify([obj.to_dict() for  obj in states_dic.values()])
+    states_dict = storage.all(State)
+    return jsonify([obj.to_dict() for  obj in states_dict.values()])
