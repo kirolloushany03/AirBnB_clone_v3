@@ -6,7 +6,7 @@ from models.place import Place
 from models.amenity import Amenity
 from flask import jsonify, abort
 
-@app_views.get('/places/<place_id>/amenities')
+@app_views.route('/places/<place_id>/amenities', methods=['GET'])
 def all_amenities(place_id):
     """Retrieve the list of all Amenity objects of a Place from storage"""
     place = storage.get(Place, place_id)
@@ -19,7 +19,7 @@ def all_amenities(place_id):
 
     return jsonify([amenity.to_dict() for amenity in amenities if amenity])
 
-@app_views.delete('/places/<place_id>/amenities/<amenity_id>')
+@app_views.route('/places/<place_id>/amenities/<amenity_id>', methods=['DELETE'])
 def delete_amenity_from_place(place_id, amenity_id):
     """Delete an Amenity object from a Place"""
     place = storage.get(Place, place_id)
@@ -40,7 +40,7 @@ def delete_amenity_from_place(place_id, amenity_id):
     storage.save()
     return jsonify({}), 200
 
-@app_views.post('/places/<place_id>/amenities/<amenity_id>')
+@app_views.route('/places/<place_id>/amenities/<amenity_id>', methods=['POST'])
 def link_amenity_to_place(place_id, amenity_id):
     """Link an amenity object to a place"""
     place = storage.get(Place, place_id)
