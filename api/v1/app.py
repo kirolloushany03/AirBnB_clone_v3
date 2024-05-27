@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ this module sets to flask web application"""
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from models import storage
 from api.v1.views import app_views
 import os
@@ -31,7 +31,10 @@ def error_404(error):
     """error handeling for error 404 not found page"""
     response = jsonify({"error": "Not found"})
     response.status_code = 404
-    return response
+    if request.method == 'DELETE':
+        return jsonify({})
+    else:
+        return response
 
 
 if __name__ == "__main__":
