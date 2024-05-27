@@ -26,6 +26,5 @@ def error_404(error):
 if __name__ == "__main__":
     host = os.getenv("HBNB_API_HOST", "0.0.0.0")
     port = int(os.getenv("HBNB_API_PORT", "5000"))
-    app.url_map.strict_slashes = False
 
     app.run(host=host, port=port, threaded=True)
