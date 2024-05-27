@@ -14,18 +14,17 @@ def all_states():
 
 
 @app_views.get('/states/<state_id>')
-def all_state(state_id):
+def get_state(state_id):
     """will get one object and check if it is ok will return the obj
     if not will send 404"""
     state = storage.get(State, state_id)
-    print(state)
     if not state:
         abort(404)
     return jsonify(state.to_dict())
 
 
 @app_views.delete('/states/<state_id>')
-def all_state_delete(state_id):
+def delete_state(state_id):
     """delete a state with id"""
     state_d = storage.get(State, state_id)
     if not state_d:
@@ -36,7 +35,7 @@ def all_state_delete(state_id):
 
 
 @app_views.post('/states')
-def all_state_post():
+def create_state():
     """create a new state"""
     state = request.get_json()
     if state is None:
@@ -49,16 +48,17 @@ def all_state_post():
 
 
 @app_views.put('/states/<state_id>')
-def all_state_put(state_id):
+def update_state(state_id):
     """update a state"""
     state = storage.get(State, state_id)
     if state is None:
         abort(404)
-    state_data = request.get_json(silent=True)
-    if state is None:
+    state_data = request.get_json()
+    if state_data is None:
         return jsonify({"error": "Not a JSON"}), 400
     for key, value in state_data.items():
-        if key not in ['id', 'created_at', 'updated_at']:
+        if key not in ['id', 'created_at', 'updated_at']\
+           and hasattr(state, key):
             setattr(state, key, value)
     state.save()
     return jsonify(state.to_dict()), 200

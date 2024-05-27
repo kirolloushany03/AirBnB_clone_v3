@@ -11,15 +11,6 @@ app.url_map.strict_slashes = False
 app.register_blueprint(app_views)
 
 
-# @app.before_request
-# def clear_trailing():
-#     from flask import redirect, request
-
-#     rp = request.path
-#     if rp != '/' and rp.endswith('/'):
-#         return redirect(rp[:-1], code=302)
-
-
 @app.teardown_appcontext
 def teardown(exception):
     """this method call storage.close()"""
