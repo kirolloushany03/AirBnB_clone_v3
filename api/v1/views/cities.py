@@ -7,7 +7,7 @@ from models.state import State
 from flask import jsonify, abort, request
 
 
-@app_views.get("/states/<state_id>/cities")
+@app_views.route("/states/<state_id>/cities", methods=["GET"])
 def all_cities(state_id):
     """Retrieve the list of all City objects of a State"""
     state = storage.get(State, state_id)
@@ -16,7 +16,7 @@ def all_cities(state_id):
     return jsonify([city.to_dict() for city in state.cities])
 
 
-@app_views.get("/cities/<city_id>")
+@app_views.route("/cities/<city_id>", methods=["GET"])
 def get_city(city_id):
     """Retrieve a City object from the storage"""
     city = storage.get(City, city_id)
@@ -25,7 +25,7 @@ def get_city(city_id):
     return jsonify(city.to_dict())
 
 
-@app_views.delete("/cities/<city_id>")
+@app_views.route("/cities/<city_id>", methods=["DELETE"])
 def delete_city(city_id):
     """Delete a City object from the storage"""
     city = storage.get(City, city_id)
@@ -36,7 +36,7 @@ def delete_city(city_id):
     return jsonify({}), 200
 
 
-@app_views.post("/states/<state_id>/cities")
+@app_views.route("/states/<state_id>/cities", methods=["POST"])
 def create_city(state_id):
     """Create a City object in storage"""
     state = storage.get(State, state_id)
@@ -53,7 +53,7 @@ def create_city(state_id):
     return jsonify(new_city.to_dict()), 201
 
 
-@app_views.put("/cities/<city_id>")
+@app_views.route("/cities/<city_id>", methods=["PUT"])
 def update_city(city_id):
     """Update a City object in the storage"""
     city = storage.get(City, city_id)

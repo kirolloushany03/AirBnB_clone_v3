@@ -8,7 +8,7 @@ from models.user import User
 from flask import jsonify, abort, request
 
 
-@app_views.get("/cities/<city_id>/places")
+@app_views.route("/cities/<city_id>/places", methods=["GET"])
 def all_places(city_id):
     """Retrieve the list of all Place objects of a City"""
     city = storage.get(City, city_id)
@@ -17,7 +17,7 @@ def all_places(city_id):
     return jsonify([place.to_dict() for place in city.places])
 
 
-@app_views.get("/places/<place_id>")
+@app_views.route("/places/<place_id>", methods=["GET"])
 def get_place(place_id):
     """Retrieve a Place object"""
     place = storage.get(Place, place_id)
@@ -26,7 +26,7 @@ def get_place(place_id):
     return jsonify(place.to_dict())
 
 
-@app_views.delete("/places/<place_id>")
+@app_views.route("/places/<place_id>", methods=["DELETE"])
 def delete_place(place_id):
     """Delete a Place object"""
     place = storage.get(Place, place_id)
@@ -37,7 +37,7 @@ def delete_place(place_id):
     return jsonify({}), 200
 
 
-@app_views.post("/cities/<city_id>/places")
+@app_views.route("/cities/<city_id>/places", methods=["POST"])
 def create_place(city_id):
     """Create a Place"""
     city = storage.get(City, city_id)
@@ -59,7 +59,7 @@ def create_place(city_id):
     return jsonify(new_place.to_dict()), 201
 
 
-@app_views.put("/places/<place_id>")
+@app_views.route("/places/<place_id>", methods=["PUT"])
 def update_place(place_id):
     """Update a Place object"""
     place = storage.get(Place, place_id)

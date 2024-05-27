@@ -6,14 +6,14 @@ from models.state import State
 from flask import jsonify, abort, request
 
 
-@app_views.get('/states')
+@app_views.route('/states', methods=['GET'])
 def all_states():
     """return all the list of all state"""
     states_dic = storage.all(State)
     return jsonify([obj.to_dict() for obj in states_dic.values()])
 
 
-@app_views.get('/states/<state_id>')
+@app_views.route('/states/<state_id>', methods=['GET'])
 def get_state(state_id):
     """will get one object and check if it is ok will return the obj
     if not will send 404"""
@@ -23,7 +23,7 @@ def get_state(state_id):
     return jsonify(state.to_dict())
 
 
-@app_views.delete('/states/<state_id>')
+@app_views.route('/states/<state_id>', methods=['DELETE'])
 def delete_state(state_id):
     """delete a state with id"""
     state_d = storage.get(State, state_id)
@@ -34,7 +34,7 @@ def delete_state(state_id):
     return jsonify({}), 200
 
 
-@app_views.post('/states')
+@app_views.route('/states', methods=['POST'])
 def create_state():
     """create a new state"""
     state = request.get_json(silent=True)
@@ -47,7 +47,7 @@ def create_state():
     return jsonify(new_state.to_dict()), 201
 
 
-@app_views.put('/states/<state_id>')
+@app_views.route('/states/<state_id>', methods=['PUT'])
 def update_state(state_id):
     """update a state"""
     state = storage.get(State, state_id)
