@@ -18,7 +18,7 @@ def all_cities(state_id):
 
 @app_views.get("/cities/<city_id>")
 def get_city(city_id):
-    """Retrieve a City object"""
+    """Retrieve a City object from the storage"""
     city = storage.get(City, city_id)
     if not city:
         abort(404)
@@ -27,7 +27,7 @@ def get_city(city_id):
 
 @app_views.delete("/cities/<city_id>")
 def delete_city(city_id):
-    """Delete a City object"""
+    """Delete a City object from the storage"""
     city = storage.get(City, city_id)
     if not city:
         abort(404)
@@ -38,7 +38,7 @@ def delete_city(city_id):
 
 @app_views.post("/states/<state_id>/cities")
 def create_city(state_id):
-    """Create a City"""
+    """Create a City object in storage"""
     state = storage.get(State, state_id)
     if not state:
         abort(404)
@@ -55,7 +55,7 @@ def create_city(state_id):
 
 @app_views.put("/cities/<city_id>")
 def update_city(city_id):
-    """Update a City object"""
+    """Update a City object in the storage"""
     city = storage.get(City, city_id)
     if not city:
         abort(404)

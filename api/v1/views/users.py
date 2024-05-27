@@ -8,14 +8,14 @@ from flask import jsonify, abort, request
 
 @app_views.get("/users")
 def all_users():
-    """Retrieve the list of all User objects"""
+    """Retrieve the list of all User objects in the storage"""
     users = storage.all(User)
     return jsonify([user.to_dict() for user in users.values()])
 
 
 @app_views.get("/users/<user_id>")
 def get_user(user_id):
-    """Retrieve a User object"""
+    """Retrieve a User object from the storage"""
     user = storage.get(User, user_id)
     if not user:
         abort(404)
@@ -24,7 +24,7 @@ def get_user(user_id):
 
 @app_views.delete("/users/<user_id>")
 def delete_user(user_id):
-    """Delete a User object"""
+    """Delete a User object from the storage"""
     user = storage.get(User, user_id)
     if not user:
         abort(404)
@@ -35,7 +35,7 @@ def delete_user(user_id):
 
 @app_views.post("/users")
 def create_user():
-    """Create a User"""
+    """Create a User object in storage"""
     user_data = request.get_json(silent=True)
     if user_data is None:
         return jsonify({"error": "Not a JSON"}), 400
@@ -50,7 +50,7 @@ def create_user():
 
 @app_views.put("/users/<user_id>")
 def update_user(user_id):
-    """Update a User object"""
+    """Update a User object in the storage"""
     user = storage.get(User, user_id)
     if not user:
         abort(404)

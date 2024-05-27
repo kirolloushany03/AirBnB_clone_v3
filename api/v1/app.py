@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" this module sets to flask web application"""
+""" this module initializes the Flask web application"""
 from flask import Flask, jsonify
 from models import storage
 from api.v1.views import app_views
@@ -13,7 +13,7 @@ app.register_blueprint(app_views)
 
 @app.teardown_appcontext
 def teardown(exception):
-    """this method call storage.close()"""
+    """this method calls storage.close() when the Flask app is done"""
     storage.close()
 
 
