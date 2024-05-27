@@ -7,7 +7,7 @@ from models.amenity import Amenity
 from flask import jsonify, abort
 
 @app_views.route('/places/<place_id>/amenities', methods=['GET'])
-def all_amenities(place_id):
+def all_places_amenities(place_id):
     """Retrieve the list of all Amenity objects of a Place from storage"""
     place = storage.get(Place, place_id)
     if not place:
@@ -28,7 +28,7 @@ def delete_amenity_from_place(place_id, amenity_id):
     amenity = storage.get(Amenity, amenity_id)
     if not amenity:
         abort(404)
-    if type(storage).__name__ == 'DBStorage':
+    if storage.__class__.__name__ == 'DBStorage':
         if amenity not in place.amenities:
             abort(404)
         place.amenities.remove(amenity)
